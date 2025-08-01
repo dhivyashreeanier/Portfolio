@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dhivya Shree. A - Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f8f8; /* Light background */
+            color: #333; /* Dark text for contrast */
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #a8a8a8;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #777;
+        }
+
+        /* Animation classes */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-up.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .scale-in.is-visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .slide-in-left.is-visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .slide-in-right.is-visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Custom button styling */
+        .btn-primary {
+            background: linear-gradient(to right, #8a2be2, #ff69b4); /* Purple to Pink gradient */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px; /* Fully rounded */
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            opacity: 0.9;
+        }
+        .btn-secondary {
+            background-color: #e0e0e0;
+            color: #333;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        .btn-secondary:hover {
+            background-color: #d0d0d0;
+            transform: translateY(-2px);
+        }
+
+        /* Project card hover effect */
+        .project-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Modal specific styling */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+            backdrop-filter: blur(5px); /* Blur background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            overflow-y: auto;
+            animation: fadeInScale 0.3s ease-out;
+        }
+        .close-button {
+            color: #aaa;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: #333;
+            text-decoration: none;
+        }
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm py-4 px-6 fixed w-full z-50 top-0">
+        <nav class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-purple-600">Dhivya Shree. A</a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#hero" class="text-gray-600 hover:text-purple-600 transition duration-300">Home</a>
+                <a href="#about" class="text-gray-600 hover:text-purple-600 transition duration-300">About</a>
+                <a href="#skills" class="text-gray-600 hover:text-purple-600 transition duration-300">Skills</a>
+                <a href="#portfolio" class="text-gray-600 hover:text-purple-600 transition duration-300">Portfolio</a>
+                <a href="#experience" class="text-gray-600 hover:text-purple-600 transition duration-300">Experience</a>
+                <a href="#contact" class="text-gray-600 hover:text-purple-600 transition duration-300">Contact</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-gray-600 hover:text-purple-600 focus:outline-none">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white py-4 mt-4 rounded-lg shadow-lg">
+            <a href="#hero" class="block px-6 py-2 text-gray-600 hover:bg-gray-100 transition duration-300">Home</a>
+            <a href="#about" class="block px-6 py-2 text-gray-600 hover:bg-gray-100 transition duration-300">About</a>
+            <a href="#skills" class="block px-6 py-2 text-gray-600 hover:bg-gray-100 transition duration-300">Skills</a>
+            <a href="#portfolio" class="block px-6 py-2 text-gray-600 hover:bg-gray-100 transition duration-300">Portfolio</a>
+            <a href="#experience" class="block px-6 py-2 text-gray-600 hover:bg-gray-100 transition duration-300">Experience</a>
+            <a href="#contact" class="block px-6 py-2 text-gray-600 hover:bg-gray-100 transition duration-300">Contact</a>
+        </div>
+    </header>
+
+    <main class="pt-20">
+        <!-- Hero Section -->
+        <section id="hero" class="relative h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100 text-center overflow-hidden">
+            <div class="relative z-10 p-6 max-w-4xl mx-auto">
+                <h1 class="text-5xl md:text-7xl font-extrabold text-gray-900 leading-tight mb-4 fade-in-up">Dhivya Shree. A</h1>
+                <p class="text-xl md:text-2xl text-gray-700 mb-8 fade-in-up" style="transition-delay: 0.2s;">Graphic Designer </p>
+                <p class="text-lg text-gray-600 mb-10 fade-in-up" style="transition-delay: 0.4s;">Bringing innovative designs to life with a passion for new technologies.</p>
+                <a href="#portfolio" class="btn-primary inline-block fade-in-up" style="transition-delay: 0.6s;">Explore Portfolio</a>
+            </div>
+            <!-- Subtle background animation elements -->
+            <div class="absolute top-1/4 left-1/4 w-32 h-32 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob"></div>
+            <div class="absolute top-1/2 right-1/4 w-48 h-48 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-2000"></div>
+            <div class="absolute bottom-1/4 left-1/3 w-40 h-40 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-4000"></div>
+        </section>
+
+        <!-- About Me Section -->
+        <section id="about" class="py-16 bg-white">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <h2 class="text-4xl font-bold text-center text-gray-900 mb-12 fade-in-up">About Me</h2>
+                <div class="flex flex-col md:flex-row items-center gap-10">
+                    <div class="md:w-1/2 text-lg text-gray-700 fade-in-up">
+                        <p class="mb-4">I'm a passionate Graphic Designer with a strong eye for visual storytelling and a love for bringing ideas to life through design. With over [1 years] of experience, I specialize in creating compelling visuals across digital and print platforms, from branding and social media creatives to UI elements and marketing collateral.
+                                        My approach blends creativity with strategy. I believe good design not only looks great but also communicates clearly and leaves a lasting impression. I enjoy collaborating with clients and teams to turn concepts into clean, modern, and user-focused designs.</p>
+                    </div>
+                    <div class="md:w-1/2 flex justify-center fade-in-up" style="transition-delay: 0.2s;">
+                        <img src="MAIN.jpeg" alt="Profile Picture" class="rounded-full shadow-lg w-64 h-64 md:w-80 md:h-80 object-cover border-4 border-purple-200">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills & Expertise Section -->
+        <section id="skills" class="py-16 bg-gray-50">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <h2 class="text-4xl font-bold text-center text-gray-900 mb-12 fade-in-up">Skills & Expertise</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div class="fade-in-up">
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center"><i class="fas fa-lightbulb text-purple-500 mr-3"></i>Areas of Expertise</h3>
+                        <ul class="space-y-4 text-lg text-gray-700">
+                            <li class="flex items-center"><i class="fas fa-palette text-blue-400 mr-3"></i>UI/UX Designer</li>
+                            <li class="flex items-center"><i class="fas fa-code text-green-400 mr-3"></i>Web Development</li>
+                            <li class="flex items-center"><i class="fas fa-pencil-ruler text-pink-400 mr-3"></i>Graphic Designer</li>
+                        </ul>
+                    </div>
+                    <div class="fade-in-up" style="transition-delay: 0.2s;">
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center"><i class="fas fa-tools text-purple-500 mr-3"></i>Technical Skills</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-lg text-gray-700">
+                            <div>
+                                <h4 class="font-medium text-gray-800 mb-2">Programming Languages:</h4>
+                                <ul class="list-disc list-inside space-y-1">
+                                    <li>HTML, CSS, JavaScript</li>
+                                    <li>Java Full Stack</li>
+                                    <li>SQL (Basics)</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-800 mb-2">Tools & Software:</h4>
+                                <ul class="list-disc list-inside space-y-1">
+                                    <li>Adobe Creative(Photoshop, Illustrator)</li>
+                                    <li>Figma, Canva</li>
+                                    <li>Visual Studio Code</li>
+                                    <li>GitHub, Eclipse</li>
+                                    
+                                </ul>
+                            </div>
+                            <div class="sm:col-span-2">
+                                <h4 class="font-medium text-gray-800 mb-2">Other Skills:</h4>
+                                <ul class="list-disc list-inside space-y-1">
+                                    <li>Video Editor</li>
+                                    <li>Content Writing</li>
+                                    <li>Data Analysis</li>
+                                    <li>Microsoft Office, Excel Proficiency</li>
+                                    <li>Data Management</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio/Projects Section -->
+        <section id="portfolio" class="py-16 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl font-bold text-center text-gray-900 mb-12 fade-in-up">My Portfolio</h2>
+
+                <!-- Web Design Projects -->
+                <h3 class="text-3xl font-bold text-gray-800 mb-8 text-center md:text-left fade-in-up">Web Design</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                    <!-- Project 1: Burger Shop -->
+                    <div class="bg-blue-50 rounded-xl shadow-lg overflow-hidden project-card fade-in-up">
+                        <img src="https://placehold.co/600x400/E0F2F7/2C3E50?text=Burger Shop"
+                             onerror="this.onerror=null;this.src='https: //placehold.co/600x400/E0F2F7/2C3E50?text=Image+Not+Found';"
+                             data-content-fetch-id="uploaded:Screenshot (7).jpg-48f2dd8a-6e01-4277-b77b-4b5613424163"
+                             alt="Burger Shop Website" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h4 class="text-xl font-semibold text-gray-900 mb-2">Burger Shop - Food Ordering Website</h4>
+                            <p class="text-gray-700 text-sm mb-4">Designed a user-friendly website for a burger restaurant, focusing on intuitive navigation, delicious food presentation, and clear service offerings.</p>
+                            <button class="btn-secondary text-sm" onclick="openModal('Burger Shop')">View Details</button>
+                        </div>
+                    </div>
+
+                    <!-- Project 2: SHP Boutique -->
+                    <div class="bg-purple-50 rounded-xl shadow-lg overflow-hidden project-card fade-in-up" style="transition-delay: 0.2s;">
+                        <img src="https://placehold.co/600x400/E0F2F7/2C3E50?text=SHP+Boutique"
+                             onerror="this.onerror=null;this.src='https //placehold.co/600x400/E0F2F7/2C3E50?text=Image+Not+Found';"
+                             data-content-fetch-id="uploaded:Screenshot (17).jpg-7e0b812f-e18c-4375-be3e-73753f83ccc2"
+                             alt="SHP Boutique Website" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h4 class="text-xl font-semibold text-gray-900 mb-2">SHP Boutique - E-commerce Website</h4>
+                            <p class="text-gray-700 text-sm mb-4">Developed a modern e-commerce platform for a boutique, designed to showcase a curated collection of fashion trends.</p>
+                            <button class="btn-secondary text-sm" onclick="openModal('shp-boutique')">View Details</button>
+                        </div>
+                    </div>
+
+                    <!-- Project 3: Food Donation and Management -->
+                    <div class="bg-green-50 rounded-xl shadow-lg overflow-hidden project-card fade-in-up" style="transition-delay: 0.4s;">
+                        <img src="https://placehold.co/600x400/E0F2F7/2C3E50?text=Food+Donation"
+                             onerror="this.onerror=null;this.src='https: //placehold.co/600x400/E0F2F7/2C3E50?text=Image+Not+Found';"
+                             alt="Food Donation Project" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h4 class="text-xl font-semibold text-gray-900 mb-2">Food Donation and Management</h4>
+                            <p class="text-gray-700 text-sm mb-4">Front-end design contribution to a web application addressing food waste, allowing donations to those in need.</p>
+                            <button class="btn-secondary text-sm" onclick="openModal('food-donation')">View Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Graphic Design Projects -->
+                <h3 class="text-3xl font-bold text-gray-800 mb-8 text-center md:text-left fade-in-up">Graphic Design</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Project 4: Poster -->
+                    <div class="bg-yellow-50 rounded-xl shadow-lg overflow-hidden project-card fade-in-up">
+                        <img src="https://placehold.co/600x400/E0F2F7/2C3E50?text=Poster"
+                             onerror="this.onerror=null;this.src='https: //placehold.co/600x400/E0F2F7/2C3E50?text=Image+Not+Found';"
+                             data-content-fetch-id="uploaded:poster 1.jpg-7b8f54ee-14a5-4a52-abb8-493645b7b320"
+                             alt="Poster" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h4 class="text-xl font-semibold text-gray-900 mb-2">Annual Day & Graduation Poster</h4>
+                            <p class="text-gray-700 text-sm mb-4">Designed a vibrant circus-themed poster for a preschool's annual day and graduation event.</p>
+                            <button class="btn-secondary text-sm" onclick="openModal('annual-day-poster')">View Details</button>
+                        </div>
+                    </div>
+
+                    <!-- Project 5: Swaragh Technologies Poster -->
+                    <div class="bg-red-50 rounded-xl shadow-lg overflow-hidden project-card fade-in-up" style="transition-delay: 0.2s;">
+                        <img src="https://placehold.co/600x400/E0F2F7/2C3E50?text=Swaragh+Poster"
+                             onerror="this.onerror=null;this.src='https: //placehold.co/600x400/E0F2F7/2C3E50?text=Image+Not+Found';"
+                             data-content-fetch-id="uploaded:Poster Swaragh.jpg-a90590a1-3a52-48c9-9c20-7b46aa837e2d"
+                             alt="Swaragh Technologies Poster" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h4 class="text-xl font-semibold text-gray-900 mb-2">Swaragh Technologies - Services Poster</h4>
+                            <p class="text-gray-700 text-sm mb-4">Created a visually engaging poster outlining key services for a technology company.</p>
+                            <button class="btn-secondary text-sm" onclick="openModal('swaragh-poster')">View Details</button>
+                        </div>
+                    </div>
+
+                    <!-- Project 6: Happy Holidays Poster -->
+                    <div class="bg-indigo-50 rounded-xl shadow-lg overflow-hidden project-card fade-in-up" style="transition-delay: 0.4s;">
+                        <img src="https://placehold.co/600x400/E0F2F7/2C3E50?text=Poster"
+                             onerror="this.onerror=null;this.src='https: //placehold.co/600x400/E0F2F7/2C3E50?text=Image+Not+Found';"
+                             data-content-fetch-id="uploaded:poster2.jpg-96910c9d-5261-49af-b9cf-f433a8c39ee4"
+                             alt="Poster" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h4 class="text-xl font-semibold text-gray-900 mb-2">Promotional Poster</h4>
+                            <p class="text-gray-700 text-sm mb-4">Designed a promotional poster.</p>
+                            <button class="btn-secondary text-sm" onclick="openModal('happy-holidays-poster')">View Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience & Education Section -->
+        <section id="experience" class="py-16 bg-gray-50">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <h2 class="text-4xl font-bold text-center text-gray-900 mb-12 fade-in-up">Experience & Education</h2>
+                <div class="relative">
+                    <!-- Vertical Timeline Line -->
+                    <div class="absolute left-1/2 transform -translate-x-1/2 w-1 bg-purple-200 h-full hidden md:block"></div>
+
+                    <!-- Experience Item 1 -->
+                    <div class="flex flex-col md:flex-row items-center justify-between mb-10 fade-in-up">
+                        <div class="md:w-5/12 text-right md:pr-8 mb-4 md:mb-0">
+                            <h3 class="text-xl font-semibold text-gray-900">Graphic Designer</h3>
+                            <p class="text-gray-700">JS Group of Company</p>
+                            <p class="text-sm text-gray-500">Designed logos, brochures and Posters. Developed and implemented brand guidelines.</p>
+                        </div>
+                        <div class="md:w-1/12 flex justify-center">
+                            <div class="w-4 h-4 bg-purple-500 rounded-full shadow-md"></div>
+                        </div>
+                        <div class="md:w-5/12 text-left md:pl-8">
+                            <p class="text-md font-medium text-gray-600">Ongoing</p>
+                        </div>
+                    </div>
+
+                    <!-- Experience Item 2 -->
+                    <div class="flex flex-col md:flex-row items-center justify-between mb-10 fade-in-up" style="transition-delay: 0.2s;">
+                        <div class="md:w-5/12 text-right md:pr-8 mb-4 md:mb-0 order-2 md:order-1">
+                            <p class="text-md font-medium text-gray-600">May 2024 - Sep 2024</p>
+                        </div>
+                        <div class="md:w-1/12 flex justify-center order-1 md:order-2">
+                            <div class="w-4 h-4 bg-purple-500 rounded-full shadow-md"></div>
+                        </div>
+                        <div class="md:w-5/12 text-left md:pl-8 order-3 md:order-3">
+                            <h3 class="text-xl font-semibold text-gray-900">Java Full Stack Certification</h3>
+                            <p class="text-gray-700">Pentagon Space - Bangalore</p>
+                        </div>
+                    </div>
+
+                    <!-- Experience Item 3 -->
+                    <div class="flex flex-col md:flex-row items-center justify-between mb-10 fade-in-up" style="transition-delay: 0.4s;">
+                        <div class="md:w-5/12 text-right md:pr-8 mb-4 md:mb-0">
+                            <h3 class="text-xl font-semibold text-gray-900">B.E (Computer Science and Engineering)</h3>
+                            <p class="text-gray-700">CARE College of Engineering</p>
+                            <p class="text-sm text-gray-500">CGPA: 8.3</p>
+                        </div>
+                        <div class="md:w-1/12 flex justify-center">
+                            <div class="w-4 h-4 bg-purple-500 rounded-full shadow-md"></div>
+                        </div>
+                        <div class="md:w-5/12 text-left md:pl-8">
+                            <p class="text-md font-medium text-gray-600">Year of Passing: 2024</p>
+                        </div>
+                    </div>
+
+                    <!-- Experience Item 4 -->
+                    <div class="flex flex-col md:flex-row items-center justify-between mb-10 fade-in-up" style="transition-delay: 0.6s;">
+                        <div class="md:w-5/12 text-right md:pr-8 mb-4 md:mb-0 order-2 md:order-1">
+                            <p class="text-md font-medium text-gray-600">July 2023</p>
+                        </div>
+                        <div class="md:w-1/12 flex justify-center order-1 md:order-2">
+                            <div class="w-4 h-4 bg-purple-500 rounded-full shadow-md"></div>
+                        </div>
+                        <div class="md:w-5/12 text-left md:pl-8 order-3 md:order-3">
+                            <h3 class="text-xl font-semibold text-gray-900">Web Development Intern</h3>
+                            <p class="text-gray-700">VEI Technology</p>
+                            <p class="text-sm text-gray-500">Internship focused on HTML, CSS, and JavaScript.</p>
+                        </div>
+                    </div>
+
+                    <!-- Experience Item 5 -->
+                    <div class="flex flex-col md:flex-row items-center justify-between mb-10 fade-in-up" style="transition-delay: 0.8s;">
+                        <div class="md:w-5/12 text-right md:pr-8 mb-4 md:mb-0">
+                            <h3 class="text-xl font-semibold text-gray-900">Python for Deep Learning Intern</h3>
+                            <p class="text-gray-700">VEI Technologies</p>
+                        </div>
+                        <div class="md:w-1/12 flex justify-center">
+                            <div class="w-4 h-4 bg-purple-500 rounded-full shadow-md"></div>
+                        </div>
+                        <div class="md:w-5/12 text-left md:pl-8">
+                            <p class="text-md font-medium text-gray-600">August 2022</p>
+                        </div>
+                    </div>
+
+                    <!-- Experience Item 6 -->
+                    <div class="flex flex-col md:flex-row items-center justify-between mb-10 fade-in-up" style="transition-delay: 1.0s;">
+                        <div class="md:w-5/12 text-right md:pr-8 mb-4 md:mb-0 order-2 md:order-1">
+                            <p class="text-md font-medium text-gray-600">May 2021 - June 2021</p>
+                        </div>
+                        <div class="md:w-1/12 flex justify-center order-1 md:order-2">
+                            <div class="w-4 h-4 bg-purple-500 rounded-full shadow-md"></div>
+                        </div>
+                        <div class="md:w-5/12 text-left md:pl-8 order-3 md:order-3">
+                            <h3 class="text-xl font-semibold text-gray-900">Campus Ambassador Intern</h3>
+                            <p class="text-gray-700">GREENIAC Company</p>
+                        </div>
+                    </div>
+
+                    <!-- Experience Item 7 -->
+                    <div class="flex flex-col md:flex-row items-center justify-between mb-10 fade-in-up" style="transition-delay: 1.2s;">
+                        <div class="md:w-5/12 text-right md:pr-8 mb-4 md:mb-0">
+                            <h3 class="text-xl font-semibold text-gray-900">Grade 12</h3>
+                            <p class="text-gray-700">Infant Jesus Girl's Higher Secondary School</p>
+                            <p class="text-sm text-gray-500">Percentage: 53</p>
+                        </div>
+                        <div class="md:w-1/12 flex justify-center">
+                            <div class="w-4 h-4 bg-purple-500 rounded-full shadow-md"></div>
+                        </div>
+                        <div class="md:w-5/12 text-left md:pl-8">
+                            <p class="text-md font-medium text-gray-600">Year of Passing: 2019</p>
+                        </div>
+                    </div>
+
+                    <!-- Experience Item 8 -->
+                    <div class="flex flex-col md:flex-row items-center justify-between mb-10 fade-in-up" style="transition-delay: 1.4s;">
+                        <div class="md:w-5/12 text-right md:pr-8 mb-4 md:mb-0 order-2 md:order-1">
+                            <p class="text-md font-medium text-gray-600">Year of Passing: 2017</p>
+                        </div>
+                        <div class="md:w-1/12 flex justify-center order-1 md:order-2">
+                            <div class="w-4 h-4 bg-purple-500 rounded-full shadow-md"></div>
+                        </div>
+                        <div class="md:w-5/12 text-left md:pl-8 order-3 md:order-3">
+                            <h3 class="text-xl font-semibold text-gray-900">Grade 10</h3>
+                            <p class="text-gray-700">Infant Jesus Girl's Higher Secondary School</p>
+                            <p class="text-sm text-gray-500">Percentage: 77</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Extra-curricular Activities Section -->
+        <section id="activities" class="py-16 bg-white">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <h2 class="text-4xl font-bold text-center text-gray-900 mb-12 fade-in-up">Extra-curricular Activities</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-lg text-gray-700">
+                    <div class="flex items-start fade-in-up">
+                        <i class="fas fa-campground text-purple-500 text-2xl mr-4 mt-1"></i>
+                        <p>Volunteered for NSS Camp</p>
+                    </div>
+                    <div class="flex items-start fade-in-up" style="transition-delay: 0.2s;">
+                        <i class="fas fa-music text-blue-500 text-2xl mr-4 mt-1"></i>
+                        <p>Music and Eco Clubs Leader in College</p>
+                    </div>
+                    <div class="flex items-start fade-in-up" style="transition-delay: 0.4s;">
+                        <i class="fas fa-volleyball-ball text-green-500 text-2xl mr-4 mt-1"></i>
+                        <p>District level Throw Ball Runner (2014-2015)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-16 bg-gray-50">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <h2 class="text-4xl font-bold text-center text-gray-900 mb-12 fade-in-up">Get In Touch</h2>
+                <div class="flex flex-col md:flex-row items-center gap-10">
+                    <div class="md:w-1/2 text-lg text-gray-700 space-y-6 fade-in-up">
+                        <p class="flex items-center"><i class="fas fa-map-marker-alt text-purple-500 mr-4 text-xl"></i>Trichy, India</p>
+                        <p class="flex items-center"><i class="fas fa-phone-alt text-purple-500 mr-4 text-xl"></i>+91 9944713798</p>
+                        <p class="flex items-center"><i class="fas fa-envelope text-purple-500 mr-4 text-xl"></i>dhivyashreea42@gmail.com</p>
+                        <div class="flex space-x-6 pt-4">
+                            <a href="https://www.linkedin.com/in/dhivya-shree-a-aa0a93213" target="_blank" class="text-gray-600 hover:text-blue-600 transition duration-300 transform hover:scale-110"><i class="fab fa-linkedin text-3xl"></i></a>
+                            <a href="https://github.com/dhivyashreeanier" target="_blank" class="text-gray-600 hover:text-gray-900 transition duration-300 transform hover:scale-110"><i class="fab fa-github text-3xl"></i></a>
+                            <a href="mailto:dhivyashreea42@gmail.com" class="text-gray-600 hover:text-red-500 transition duration-300 transform hover:scale-110"><i class="fas fa-envelope text-3xl"></i></a>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 w-full bg-white p-8 rounded-xl shadow-lg fade-in-up" style="transition-delay: 0.2s;">
+                        <form class="space-y-6">
+                            <div>
+                                <label for="name" class="block text-gray-700 text-sm font-medium mb-2">Name</label>
+                                <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-300 focus:border-purple-500 transition duration-300" placeholder="Your Name">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-gray-700 text-sm font-medium mb-2">Email</label>
+                                <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-300 focus:border-purple-500 transition duration-300" placeholder="Your Email">
+                            </div>
+                            <div>
+                                <label for="message" class="block text-gray-700 text-sm font-medium mb-2">Message</label>
+                                <textarea id="message" name="message" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-300 focus:border-purple-500 transition duration-300" placeholder="Your Message"></textarea>
+                            </div>
+                            <button type="submit" class="btn-primary w-full">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 text-center">
+        <div class="container mx-auto px-6">
+            <p>&copy; 2025 Dhivya Shree. A. All rights reserved.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="https://www.linkedin.com/in/dhivya-shree-a-aa0a93213" target="_blank" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-linkedin text-xl"></i></a>
+                <a href="https://github.com/dhivyashreeanier" target="_blank" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-github text-xl"></i></a>
+                <a href="mailto:dhivyashreea42@gmail.com" class="text-gray-400 hover:text-white transition duration-300"><i class="fas fa-envelope text-xl"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Project Details Modal -->
+    <div id="projectModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <h3 id="modalTitle" class="text-3xl font-bold text-gray-900 mb-4"></h3>
+            <p id="modalDescription" class="text-gray-700 mb-6"></p>
+            <div id="modalImages" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                <!-- Images will be loaded here -->
+            </div>
+            <div id="modalLinks" class="flex flex-wrap gap-4">
+                <!-- Links will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when a link is clicked
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Scroll Animation (Intersection Observer)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                } else {
+                    entry.target.classList.remove('is-visible'); // Optional: remove class when out of view
+                }
+            });
+        }, { threshold: 0.1 }); // Trigger when 10% of the element is visible
+
+        document.querySelectorAll('.fade-in-up, .scale-in, .slide-in-left, .slide-in-right').forEach(element => {
+            observer.observe(element);
+        });
+
+        // Project Details Modal Logic
+        const projectModal = document.getElementById('projectModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDescription = document.getElementById('modalDescription');
+        const modalImages = document.getElementById('modalImages');
+        const modalLinks = document.getElementById('modalLinks');
+
+        const projects = {
+            'Burger Shop': {
+                title: 'Burger Shop - Food Ordering Website',
+                description: 'Designed a user-friendly website for a burger restaurant, "Burger Shop", focusing on intuitive navigation, delicious food presentation, and clear service offerings like home delivery and custom recipes. Implemented sections for "About Us", "Our Recipe", "Our Services", and "Contact Us".',
+                images: [
+                    { src: 'BS1.png', alt: 'Burger Shop Hero' },
+                    { src: 'BS2.png', alt: 'Burger Shop Mobile Menu' },
+                    { src: 'BS3.png', alt: 'Burger Shop Services' },
+                    { src: 'BS4.png', alt: 'Burger Shop About Us' },
+                    { src: 'BS5.png', alt: 'Burger Shop Recipes' },
+                    { src: 'BS6.png', alt: 'Burger Shop More Recipes' },
+                    { src: 'BS7.png', alt: 'Burger Shop Custom Recipes' },
+                    { src: 'BS8.png', alt: 'Burger Shop Home Delivery' },
+                    { src: 'BS9.png', alt: 'Burger Shop Contact' }
+                ],
+                links: []
+            },
+            'shp-boutique': {
+                title: 'SHP Boutique - E-commerce Website',
+                description: 'Developed a modern and stylish e-commerce platform for "SHP Boutique", designed to provide an ultimate destination for trendy and high-quality fashion. The site features intuitive navigation, clear product categorization, detailed product views with "Add to Cart" functionality, and a comprehensive footer with quick links and contact information.',
+                images: [
+                    { src: 'SHP1.png', alt: 'SHP Boutique Hero' },
+                    { src: 'SHP2.png', alt: 'SHP Boutique Mobile Nav' },
+                    { src: 'SHP3.png', alt: 'SHP Boutique Apparel' },
+                    { src: 'SHP4.png', alt: 'SHP Boutique Accessories' },
+                    { src: 'SHP5.png', alt: 'SHP Boutique Classic Jeans' },
+                    { src: 'SHP6.png', alt: 'SHP Boutique Men\'s Polo' },
+                    { src: 'SHP7.png', alt: 'SHP Boutique Quick View Modal' },
+                    { src: 'SHP8.png', alt: 'SHP Boutique Footer' }
+                ],
+                links: []
+            },
+            'food-donation': {
+                title: 'Food Donation and Management',
+                description: 'This team project addressed food waste by creating a web application using SQL and a real-time database. My primary contribution was the front-end design, enabling restaurants and individuals to donate leftover food to those in need, thereby promoting environmental and economic sustainability.',
+                images: [
+                    { src: 'app.png', alt: 'Food Donation App Screenshot' }
+                ],
+                links: []
+            },
+            'annual-day-poster': {
+                title: 'Annual Day & Graduation Poster',
+                description: 'Designed an inviting poster for the Helen O\'Grady International Preschool\'s 1st Annual Day & Graduation event, featuring a vibrant circus theme with playful characters and clear event details (March 22, 5:30 PM, Kia\'s Premium Turf).',
+                images: [
+                    { src: 'HOG1.png', alt: 'Annual Day Poster' },
+                    { src: 'HOG2.png', alt: 'Annual Day Poster' }
+                ],
+                links: []
+            },
+            'swaragh-poster': {
+                title: 'Swaragh Technologies - Services Poster',
+                description: 'Created a visually engaging poster for Swaragh Technologies, outlining their key services such as Website Designing, Web Development, Online Marketing, and SEO, with a focus on "OUR SERVICES" and graphic design elements.',
+                images: [
+                    { src: 'Poster Swaragh.png', alt: 'Swaragh Technologies Poster' },
+                    { src: 'Swaragh Poster.png', alt: 'Swaragh Technologies Poster' },
+                    { src: 'Swaragh Technologies.png', alt: 'Swaragh Technologies logo' }
+                ],
+                links: []
+            },
+            'happy-holidays-poster': {
+                title: 'Designed a promotional poster',
+                description: 'Designed a promotional poster".',
+                images: [
+                    { src: 'Restaurant Promotion Poster.png', alt: 'Happy Holidays Poster' },
+                    { src: 'Cofee Hunt.png', alt: 'Happy Holidays Poster' },
+                    { src: 'WORK 1.png', alt: 'Happy Holidays Poster' },
+                    { src: 'WORK 2.png', alt: 'Happy Holidays Poster' },
+                    { src: 'work.png', alt: 'Happy Holidays Poster' },
+                    { src: 'SHP.png', alt: 'Happy Holidays Poster' },
+                    { src: 'poster2.png', alt: 'Happy Holidays Poster' }
+                ],
+                links: []
+            }
+        };
+
+        function openModal(projectId) {
+            const project = projects[projectId];
+            if (project) {
+                modalTitle.textContent = project.title;
+                modalDescription.textContent = project.description;
+                modalImages.innerHTML = ''; // Clear previous images
+                project.images.forEach(img => {
+                    const imgElement = document.createElement('img');
+                    imgElement.src = img.src;
+                    imgElement.alt = img.alt;
+                    imgElement.classList.add('w-full', 'h-auto', 'rounded-lg', 'shadow-md', 'object-cover');
+                    imgElement.onerror = function() {
+                        this.onerror=null;
+                        this.src='https://placehold.co/600x400/E0F2F7/2C3E50?text=Image+Not+Found';
+                    };
+                    modalImages.appendChild(imgElement);
+                });
+
+                modalLinks.innerHTML = ''; // Clear previous links
+                project.links.forEach(link => {
+                    const linkElement = document.createElement('a');
+                    linkElement.href = link.href;
+                    linkElement.target = '_blank';
+                    linkElement.classList.add('btn-primary', 'inline-flex', 'items-center', 'text-sm');
+                    linkElement.innerHTML = `<i class="${link.icon} mr-2"></i>${link.text}`;
+                    modalLinks.appendChild(linkElement);
+                });
+
+                projectModal.classList.remove('hidden');
+                projectModal.classList.add('flex'); // Use flex to center
+            }
+        }
+
+        function closeModal() {
+            projectModal.classList.add('hidden');
+            projectModal.classList.remove('flex');
+        }
+
+        // Close modal when clicking outside content
+        projectModal.addEventListener('click', (event) => {
+            if (event.target === projectModal) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
